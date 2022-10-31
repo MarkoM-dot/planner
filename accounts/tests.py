@@ -8,13 +8,20 @@ class TestUser(TestCase):
     Test custom User functionality.
     """
 
+    @classmethod
+    def setUpTestData(cls):
+        """
+        Store common data.
+        """
+        cls.User = get_user_model()
+
     def test_create_user(self):
         """
         Should create user with email and password.
         """
         email = "test@example.com"
         password = "testpass123"
-        user = get_user_model().objects.create_user(email=email, password=password)
+        user = self.User.objects.create_user(email=email, password=password)
 
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
@@ -35,9 +42,7 @@ class TestUser(TestCase):
         ]
 
         for email, expected in sample_emails:
-            user = get_user_model().objects.create_user(
-                email=email, password="sample1234"
-            )
+            user = self.User.objects.create_user(email=email, password="sample1234")
             self.assertEqual(user.email, expected)
 
     def test_create_user_without_email_raises_error(self):
@@ -45,13 +50,13 @@ class TestUser(TestCase):
         Raises error where we do not have an email.
         """
         with self.assertRaises(ValueError):
-            get_user_model().objects.create_user(email="", password="test123")
+            self.User.objects.create_user(email="", password="test123")
 
     def test_create_superuser(self):
         """
         Create a super user.
         """
-        user = get_user_model().objects.create_superuser(
+        user = self.User.objects.create_superuser(
             email="testsuper@example.com", password="test123"
         )
 
@@ -65,12 +70,10 @@ class TestUser(TestCase):
         duplicate_email = "example@example.com"
         password = "test123T"
 
-        get_user_model().objects.create_user(email=duplicate_email, password=password)
+        self.User.objects.create_user(email=duplicate_email, password=password)
 
         with self.assertRaises(IntegrityError):
-            get_user_model().objects.create_user(
-                email=duplicate_email, password=password
-            )
+            self.User.objects.create_user(email=duplicate_email, password=password)
 
     def test_create_user_with_fields(self):
         """
@@ -81,7 +84,7 @@ class TestUser(TestCase):
         first_name = "Testy"
         last_name = "McTesterson"
 
-        user = get_user_model().objects.create_user(
+        user = self.User.objects.create_user(
             email=email, password=password, first_name=first_name, last_name=last_name
         )
 
