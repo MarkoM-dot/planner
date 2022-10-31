@@ -12,6 +12,8 @@ class UserManager(BaseUserManager):
 
         Returns said user.
         """
+        if not email:
+            raise ValueError("You must provide an email.")
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
