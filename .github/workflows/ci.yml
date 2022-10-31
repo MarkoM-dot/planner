@@ -49,6 +49,8 @@ jobs:
       
     - run: poetry install --no-interaction
 
+    - run: poetry run black . --check
+    - run: poetry run isort . --check
     - name: Run Tests
       env:
         DEBUG: ${{ secrets.DEBUG }}
