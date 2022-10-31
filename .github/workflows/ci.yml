@@ -8,19 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v3
+
+    - uses: actions/setup-python@v3
       with:
         python-version: "3.10"
     
-    - name: Cache poetry install
-      uses: actions/cache@v2
+    - uses: actions/cache@v2
       with:
         path: ~/.local
         key: poetry-1.2.2-0
     
-    - name: Install and configure poetry
-      uses: snok/install-poetry@v1
+    - uses: snok/install-poetry@v1
       with:
         version: 1.2.2
         virtualenvs-create: true
@@ -33,7 +31,7 @@ jobs:
         path: .venv
         key: pydeps-${{ hashFiles('**/poetry.lock') }}
     
-    - name: poetry install --no-interaction --no-root
+    - run: poetry install --no-interaction --no-root
       if: steps.cache-deps.outputs.cache-hit != 'true'
       
     - run: poetry install --no-interaction
