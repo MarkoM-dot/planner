@@ -4,9 +4,9 @@ Essentially a diary cutomized to my liking.
 
 ## Getting started
 
-"""shell
+```shell
 poetry install
 poetry shell
 ./manage.py migrate
 ./manage.py runserver
-"""
+```
