@@ -31,3 +31,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
     objects = UserManager()
+
+    def __str__(self):
+        """
+        Email as string representation of instance.
+        """
+        return self.email
