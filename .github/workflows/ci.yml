@@ -36,8 +36,6 @@ jobs:
       
     - run: poetry install --no-interaction
 
-    - name: Check poetry version
-      run: poetry --version
         #    - name: Run Tests
         #env:
         #DEBUG: ${{ secrets.DEBUG }}
