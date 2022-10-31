@@ -40,14 +40,14 @@ class TestUser(TestCase):
         Raises error where we do not have an email.
         """
         with self.assertRaises(ValueError):
-            get_user_model().objects.create_user("", "test123")
+            get_user_model().objects.create_user(email="", password="test123")
 
     def test_create_superuser(self):
         """
         Create a super user.
         """
         user = get_user_model().objects.create_superuser(
-            "testsuper@example.com", "test123"
+            email="testsuper@example.com", password="test123"
         )
 
         self.assertTrue(user.is_superuser)
